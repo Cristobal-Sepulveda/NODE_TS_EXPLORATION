@@ -1,6 +1,6 @@
 import zod from 'zod'
 
-const querySchema = zod.object({
+export const generateAndSendCsvSchema = zod.object({
   email: zod
     .string({ required_error: 'El parámetro "email" es requerido.' })
     .email({ message: 'El email no es válido' }),
@@ -13,11 +13,6 @@ const querySchema = zod.object({
     }, { message: 'La fecha no es válida' })
 })
 
-export function validateQuerySchema (object) {
-  try {
-    const queryValidation = querySchema.parse(object)
-    return { success: true, data: queryValidation }
-  } catch (error) {
-    return { success: false, error: error.issues[0]?.message || 'Unknow error' }
-  }
+export function validateQuerySchema(object: Object, querySchema: zod.ZodObject<any, any>) {
+  const queryValidation = querySchema.parse(object);
 }

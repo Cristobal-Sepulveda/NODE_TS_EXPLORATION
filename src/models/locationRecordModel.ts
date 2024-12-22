@@ -2,7 +2,10 @@ import firebaseAdmin from '../config/firebaseConfiguration.js'
 const firestoreGCP = firebaseAdmin.firestore()
 
 export class LocationRecordModel {
-  static async getAllInDate (date, csvRows) {
+  async getAllInDate (
+    date: string, 
+    csvRows: string[][]
+  ): Promise<string[][]> {
     const collectionName = 'Users'
     const snapshot = await firestoreGCP.collection(collectionName).get()
 
@@ -23,7 +26,7 @@ export class LocationRecordModel {
         const { hoursOfRegistry, internetStatusOnline, geoPoints } = subDocData
 
         for (let i = 0; i < hoursOfRegistry.length; i++) {
-          const row = [
+          const row: string[] = [
             subDoc.id,
             subDocData.leader?.name,
             subDocData.team?.team,
