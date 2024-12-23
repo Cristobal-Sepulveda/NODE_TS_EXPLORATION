@@ -3,10 +3,11 @@ const firestoreGCP = firebaseAdmin.firestore()
 
 export class LocationRecordModel {
   async getAllInDate (
-    date: string,
-    csvRows: string[][]
+    date: string
   ): Promise<string[][]> {
     const collectionName = 'Users'
+    const csvRows: string[][] = []
+
     const snapshot = await firestoreGCP.collection(collectionName).get()
 
     for (const doc of snapshot.docs) {

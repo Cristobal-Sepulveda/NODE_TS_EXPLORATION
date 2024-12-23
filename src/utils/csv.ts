@@ -2,9 +2,11 @@ import { writeFileSync } from 'node:fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
-export function getCsv (csvRowsData: string[][]): string {
-  const header = ['fecha', 'leader', 'team', 'latitude', 'longitude', 'hourOfRegistry', 'internetStatusOnline']
-  const rows = [header, ...csvRowsData]
+export function getCsv (
+  headers: string[],
+  csvRowsData: string[][]
+): string {
+  const rows = [headers, ...csvRowsData]
   return rows.map((row) => row.map((value) => `"${value}"`).join(';')).join('\n')
 }
 

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "dev": "ts-node-dev app.ts",
+    "dev": "ts-node-dev --import ts-node/esm app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
     "gcpProd": "node app.ts",
