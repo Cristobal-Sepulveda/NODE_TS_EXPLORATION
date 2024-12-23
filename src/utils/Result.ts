@@ -1,13 +1,19 @@
-export type ResultType<T> =
-  | { success: boolean, data: T }
-  | { success: boolean, error: unknown }
+export interface OnSuccess<T> {
+  type: 'success'
+  data: T
+}
 
-export class Result {
-  static success<T>(success: boolean, data: T): ResultType<T> {
-    return { success, data }
-  }
+export interface OnError<E> {
+  type: 'error'
+  error: E
+}
 
-  static error<T>(success: boolean, error: unknown): ResultType<T> {
-    return { success, error }
+export const Result = {
+  success<T>(data: T): OnSuccess<T> {
+    return { type: 'success', data }
+  },
+
+  error<E>(error: E): OnError<E> {
+    return { type: 'error', error }
   }
 }
