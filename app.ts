@@ -1,10 +1,11 @@
 import express from 'express'
-//import dotenv from 'dotenv'
+import dotenv from 'dotenv'
 import { LocationRecordModel } from './src/models/locationRecordModel.js'
 import { createRouter } from './src/routes/routes.js'
-//dotenv.config({ path: '.env' })
+dotenv.config({ path: '.env' })
+
 const app = express()
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT ?? 8000
 
 const locationRecordModel = new LocationRecordModel()
 

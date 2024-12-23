@@ -3,7 +3,7 @@ const firestoreGCP = firebaseAdmin.firestore()
 
 export class LocationRecordModel {
   async getAllInDate (
-    date: string, 
+    date: string,
     csvRows: string[][]
   ): Promise<string[][]> {
     const collectionName = 'Users'
@@ -17,7 +17,8 @@ export class LocationRecordModel {
       const userLocationData = await userLocationRegistry.get()
 
       for (const subDoc of userLocationData.docs) {
-        const [, month, year] = subDoc.id.split('-')
+        const subDocId: string = subDoc.id
+        const [, month, year] = subDocId.split('-')
         const subDocDate = `${month}/${year}`
         const formattedDate = date.replace('-', '/')
         if (subDocDate !== formattedDate) continue
@@ -33,7 +34,7 @@ export class LocationRecordModel {
             geoPoints[i]._latitude,
             geoPoints[i]._longitude,
             hoursOfRegistry[i],
-            internetStatusOnline[i] ? 'Online' : 'Offline'
+            internetStatusOnline[i] === true ? 'Online' : 'Offline'
           ]
           csvRows.push(row)
         }

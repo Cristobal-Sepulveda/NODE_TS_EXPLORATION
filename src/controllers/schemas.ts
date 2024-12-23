@@ -12,7 +12,3 @@ export const generateAndSendCsvSchema = zod.object({
       return month >= 1 && month <= 12 && year > 0
     }, { message: 'La fecha no es válida' })
 })
-
-export function validateQuerySchema(object: Object, querySchema: zod.ZodObject<any, any>) {
-  const queryValidation = querySchema.parse(object);
-}

@@ -1,11 +1,13 @@
-export type ResultType<Q,T> = | { params: Q, data: T }| { error: unknown };
+export type ResultType<T> =
+  | { success: boolean, data: T }
+  | { success: boolean, error: unknown }
 
 export class Result {
-    static success<Q,T>(params: Q, data: T): ResultType<Q,T> {
-      return { params: params, data: data };
-    }
-  
-    static error<Q,T>(error: unknown): ResultType<Q,T> {
-      return { error };
-    } 
+  static success<T>(success: boolean, data: T): ResultType<T> {
+    return { success, data }
+  }
+
+  static error<T>(success: boolean, error: unknown): ResultType<T> {
+    return { success, error }
+  }
 }
