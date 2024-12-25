@@ -14,5 +14,5 @@ export function saveCSVInResources (csvContent: string): void {
   const _filename = fileURLToPath(import.meta.url)
   const _dirname = dirname(_filename)
   const filePath = join(_dirname, 'reporte.csv')
-  writeFileSync(filePath, csvContent, 'utf8')
+  writeFileSync(filePath, csvContent, 'utf-8')
 }

@@ -1,9 +1,10 @@
 {
   "name": "bhpfirestoretocsv",
   "version": "1.0.0",
-  "main": "app.ts",
+  "main": "app.js",
+  "type": "module",
   "scripts": {
-    "dev": "ts-node-dev --import ts-node/esm app.ts",
+    "dev": "nodemon --exec node --loader ts-node/esm app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
     "gcpProd": "node app.ts",
@@ -26,13 +27,14 @@
     "zod": "3.24.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9",
     "standard": "17.1.2",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "ts-standard": "12.0.2",
     "typescript": "^5.7.2"
   },
-  "type": "module",
   "eslintConfig": {
     "parserOptions": {
       "project": "./tsconfig.json"

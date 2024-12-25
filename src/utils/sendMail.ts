@@ -1,9 +1,6 @@
 import { createTransport } from 'nodemailer'
+import { encondingType } from './constants.js'
 
-// const subject = 'CSV de registro de ubicación de usuario'
-// const text = 'Adjunto el archivo CSV con los registros de ubicación de los usuarios.'
-// const fileName = 'user_location_registry.csv'
-const encondingType = 'utf-8'
 const serviceType = 'gmail'
 
 export async function sendEmail (

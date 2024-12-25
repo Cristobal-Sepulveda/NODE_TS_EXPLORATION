@@ -2,7 +2,7 @@ import { ZodSchema } from 'zod'
 import { Result, OnSuccess, OnError } from './result.js'
 
 export async function validateAndExecute<T> (
-  data: Record<string, string | undefined>,
+  data: Record<string, undefined>,
   schema: ZodSchema<T>,
   modelFunction: (validatedData: T) => Promise<any>
 ): Promise<OnSuccess<T> | OnError<any>> {
