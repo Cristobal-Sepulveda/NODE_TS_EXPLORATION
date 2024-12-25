@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
-import { generateAndSendCsvSchema } from './schemas.js'
+import { generateAndSendCsvSchema } from '../schemas/schemas.js'
 import { LocationRecordModel } from '../models/locationRecordModel.js'
 import { validateAndExecute } from '../utils/validateAndExecute.js'
-import { getCsv, saveCSVInResources } from '../utils/csv.js'
+import { getCsv/*, saveCSVInResources */ } from '../utils/csv.js'
+import { sendEmail } from '../utils/sendMail.js'
 
 const headers = [
   'fecha',
@@ -13,9 +14,9 @@ const headers = [
   'hourOfRegistry',
   'internetStatusOnline'
 ]
-// const subject = 'CSV de registro de ubicación de usuario'
-// const text = 'Adjunto el archivo CSV con los registros de ubicación de los usuarios.'
-// const fileName = 'user_location_registry.csv'
+const emailSubject = 'CSV de registro de ubicación de usuario'
+const emailText = 'Adjunto el archivo CSV con los registros de ubicación de los usuarios.'
+const emailFileName = 'user_location_registry.csv'
 
 export class Controller {
   locationRecordModel: LocationRecordModel
@@ -36,11 +37,24 @@ export class Controller {
       async (validatedData) => {
         const csvRowsData = await this.locationRecordModel.getAllInDate(validatedData.date)
         const csv = getCsv(headers, csvRowsData)
-        saveCSVInResources(csv)
+
+        const emailPayload = {
+          emailToReceiveTheReport: validatedData.email,
+          fileContent: csv,
+          subject: emailSubject,
+          text: emailText,
+          fileName: emailFileName
+        }
+
+        await sendEmail(emailPayload)
       }
     )
-    if (result.type === 'error') res.status(400).send('Error al generar el reporte.')
 
-    res.status(200).send('Su reporte ha sido generado y enviado al email ingresado, porfavor, espere.')
+    if (result.type === 'error') {
+      res.status(400).send('Error al generar el reporte.')
+      console.error(result.error)
+    } else {
+      res.status(200).send('Su reporte ha sido generado y enviado al email ingresado, porfavor, espere.')
+    }
   }
 }

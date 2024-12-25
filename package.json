@@ -9,7 +9,9 @@
     "start": "tsc && node dist/app.js",
     "gcpProd": "node app.ts",
     "tsc": "tsc",
-    "runT": "npm run tsc -- --init"
+    "build": "tsc -p .",
+    "runT": "npm run tsc -- --init",
+    "app": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",

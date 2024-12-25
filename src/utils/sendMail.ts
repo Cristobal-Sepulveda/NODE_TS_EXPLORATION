@@ -1,15 +1,17 @@
 import { createTransport } from 'nodemailer'
 import { encondingType } from './constants.js'
 
+interface EmailPayload {
+  emailToReceiveTheReport: string
+  fileContent: string
+  subject: string
+  text: string
+  fileName: string
+}
+
 const serviceType = 'gmail'
 
-export async function sendEmail (
-  emailToReceiveTheReport: string,
-  fileContent: string,
-  emailSubject: string,
-  emailText: string,
-  emailFileName: string
-): Promise<void> {
+export async function sendEmail (payload: EmailPayload): Promise<void> {
   const transporter = createTransport({
     service: serviceType,
     auth: {
@@ -20,13 +22,13 @@ export async function sendEmail (
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: emailToReceiveTheReport,
-    subject: emailSubject,
-    text: emailText,
+    to: payload.emailToReceiveTheReport,
+    subject: payload.subject,
+    text: payload.text,
     attachments: [
       {
-        filename: emailFileName,
-        content: fileContent,
+        filename: payload.fileName,
+        content: payload.fileContent,
         encoding: encondingType
       }
     ]
